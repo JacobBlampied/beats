@@ -34,6 +34,6 @@ template '/etc/filebeat/filebeat.yml' do
   notifies :restart, 'service[filebeat]'
 end
 
-execute "start kibana" do
-  command "sudo service kibana start"
+execute "start filebeat" do
+  command "sudo service filebeat start"
 end
