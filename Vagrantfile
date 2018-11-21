@@ -1,5 +1,4 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+
 
 required_plugins = ["vagrant-hostsupdater", "vagrant-berkshelf"]
 required_plugins.each do |plugin|
@@ -17,8 +16,10 @@ Vagrant.configure("2") do |config|
     beat.vm.box = "ubuntu/xenial64"
     beat.vm.network "private_network", ip: "192.168.10.65"
     beat.hostsupdater.aliases = ["beats.local"]
-    beat.vm.synced_folder "beats_templates", "/home/vagrant/beats_templates"
-    beat.vm.provision "shell", path: "beats_provision.sh", privileged: false
+
+    config.vm.provision "chef_solo" do |chef|
+      chef.add_recipe "beats::default"
+    end
   end
 
 end
